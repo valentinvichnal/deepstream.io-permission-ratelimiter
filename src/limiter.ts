@@ -58,30 +58,35 @@ export default class RateLimiter extends ConfigPermission implements DeepstreamP
   public canPerformAction(socketWrapper: SocketWrapper, message: Message, callback: PermissionCallback, passItOn: any): void {
     // RPC caller's data
     const userId = socketWrapper.userId;
+    const userRole = socketWrapper.serverData ? socketWrapper.serverData.role : '';
     /*
-    const userRole = socketWrapper.serverData.role || '';
     const userIP = socketWrapper.serverData.ip || '';
     */
 
-    if (isRPCReq(message) && !limits[userId]) {
-      limits[userId] = 1;
-    }
-    else if (isRPCReq(message) && limits[userId]) {
-      const cost = LIMITS[message.name] || LIMITS.default;
+    // Exlude Servers from the rate limiting
+    if (userRole !== 'S') {
 
-      if ((limits[userId] + cost) > LIMIT) {
-        //this.log.info('reject', 'limit would have reached')
-        callback(socketWrapper, message, passItOn, "Limit reached", false)
-        return
+      if (isRPCReq(message) && !limits[userId]) {
+        limits[userId] = 1;
       }
-      else if (limits[userId] < LIMIT) {
-        limits[userId] += cost;
+      else if (isRPCReq(message) && limits[userId]) {
+        const cost = LIMITS[message.name] || LIMITS.default;
+
+        if ((limits[userId] + cost) > LIMIT) {
+          //this.log.info('reject', 'limit would have reached')
+          callback(socketWrapper, message, passItOn, "Limit reached", false)
+          return
+        }
+        else if (limits[userId] < LIMIT) {
+          limits[userId] += cost;
+        }
+        else {
+          //this.log.info('reject', 'limit reached')
+          callback(socketWrapper, message, passItOn, "Limit reached", false)
+          return
+        }
       }
-      else {
-        //this.log.info('reject', 'limit reached')
-        callback(socketWrapper, message, passItOn, "Limit reached", false)
-        return
-      }
+
     }
 
     //callback(socketWrapper, message, passItOn, null, true)
