@@ -47,9 +47,15 @@ export default class RateLimiter extends ConfigPermission implements DeepstreamP
 
   public async close() {
     clearInterval(cycle)
+
+    super.close()
   }
 
-  canPerformAction(socketWrapper: SocketWrapper, message: Message, callback: PermissionCallback, passItOn: any): void {
+  public setRecordHandler(recordHandler: any): void {
+    super.setRecordHandler(recordHandler)
+  }
+
+  public canPerformAction(socketWrapper: SocketWrapper, message: Message, callback: PermissionCallback, passItOn: any): void {
     // RPC caller's data
     const userId = socketWrapper.userId;
     /*
@@ -78,7 +84,7 @@ export default class RateLimiter extends ConfigPermission implements DeepstreamP
       }
     }
 
-    callback(socketWrapper, message, passItOn, null, true)
-    return
+    //callback(socketWrapper, message, passItOn, null, true)
+    return super.canPerformAction(socketWrapper, message, callback, passItOn)
   }
 }
