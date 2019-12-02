@@ -1,6 +1,6 @@
 # Permissioning
 permission:
-  path: './@deepstream/permission-ratelimiter/dist/limiter.js'
+  path: './permission-ratelimiter/dist/limiter.js'
   options:
     # Permissions file
     permissions: fileLoad(permissions.yml)
