@@ -1,6 +1,6 @@
 {
   "name": "deepstream.io-permission-ratelimiter",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Rate limiter plugin for deepstream.io",
   "main": "dist/src/limiter.js",
   "scripts": {
