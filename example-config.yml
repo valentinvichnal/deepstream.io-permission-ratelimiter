@@ -1,0 +1,10 @@
+# Permissioning
+permission:
+  path: './@deepstream/permission-ratelimiter/dist/limiter.js'
+  options:
+    # Permissions file
+    permissions: fileLoad(permissions.yml)
+    # Amount of times nested cross-references will be loaded. Avoids endless loops
+    maxRuleIterations: 3
+    # PermissionResults are cached to increase performance. Lower number means more loading
+    cacheEvacuationInterval: 60000

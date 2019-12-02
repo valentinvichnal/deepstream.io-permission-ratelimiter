@@ -1,0 +1,25 @@
+{
+  "name": "@deepstream/permission-ratelimiter",
+  "version": "0.0.0",
+  "description": "Rate limiter plugin for deepstream.io",
+  "main": "dist/src/limiter.js",
+  "scripts": {
+    "tsc": "tsc",
+    "lint": "tslint --project .",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "author": "Valentin Vichnal <valentin@vichnal.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@deepstream/types": "^2.0.7",
+    "@deepstream/server": "^5.0.5",
+    "ts-essentials": "^3.0.4"
+  },
+  "devDependencies": {
+    "@deepstream/protobuf": "^1.0.1",
+    "@types/node": "^12.11.7",
+    "ts-node": "^8.5.2",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
+  }
+}
