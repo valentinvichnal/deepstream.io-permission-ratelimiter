@@ -26,15 +26,15 @@ function isRPCReq(message: Message) {
 
 export default class RateLimiter extends ConfigPermission implements DeepstreamPermission {
   public description = 'Valve Permission with Rate Limiter';
-  private log = this.servicesLimiter.logger.getNameSpace('RATE_LIMITER')
+  private log = this.servicesLimiter.logger.getNameSpace('RATE_LIMITER');
 
   constructor(private optionsLimiter: ValveConfig, private servicesLimiter: Readonly<DeepstreamServices>, private configLimiter: Readonly<DeepstreamConfig>) {
-    super(optionsLimiter, servicesLimiter, configLimiter)
-    this.log.info(EVENT.INFO, 'started')
+    super(optionsLimiter, servicesLimiter, configLimiter);
+    this.log.info(EVENT.INFO, 'started');
   }
 
   init() {
-    this.log.info(EVENT.INFO, 'initialized')
+    this.log.info(EVENT.INFO, 'initialized');
   }
 
   public async whenReady(): Promise<void> {
@@ -46,19 +46,19 @@ export default class RateLimiter extends ConfigPermission implements DeepstreamP
   }
 
   public async close() {
-    clearInterval(cycle)
+    clearInterval(cycle);
 
-    super.close()
+    super.close();
   }
 
   public setRecordHandler(recordHandler: any): void {
-    super.setRecordHandler(recordHandler)
+    super.setRecordHandler(recordHandler);
   }
 
   public canPerformAction(socketWrapper: SocketWrapper, message: Message, callback: PermissionCallback, passItOn: any): void {
     // RPC caller's data
-    const { userId, serverData } = socketWrapper
-    const userRole = serverData ? serverData.role : ''
+    const { userId, serverData } = socketWrapper;
+    const userRole = serverData ? serverData.role : '';
     /*
     const userIP = serverData.ip || '';
     */
@@ -74,22 +74,22 @@ export default class RateLimiter extends ConfigPermission implements DeepstreamP
 
         if ((limits[userId] + cost) > LIMIT) {
           //this.log.info('reject', 'limit would have reached')
-          callback(socketWrapper, message, passItOn, "Limit reached", false)
-          return
+          callback(socketWrapper, message, passItOn, "Limit reached", false);
+          return;
         }
         else if (limits[userId] < LIMIT) {
           limits[userId] += cost;
         }
         else {
-          //this.log.info('reject', 'limit reached')
-          callback(socketWrapper, message, passItOn, "Limit reached", false)
-          return
+          //this.log.info('reject', 'limit reached');
+          callback(socketWrapper, message, passItOn, "Limit reached", false);
+          return;
         }
       }
 
     }
 
-    //callback(socketWrapper, message, passItOn, null, true)
-    return super.canPerformAction(socketWrapper, message, callback, passItOn)
+    //callback(socketWrapper, message, passItOn, null, true);
+    return super.canPerformAction(socketWrapper, message, callback, passItOn);
   }
 }
