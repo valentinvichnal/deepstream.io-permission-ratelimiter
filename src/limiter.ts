@@ -57,10 +57,10 @@ export default class RateLimiter extends ConfigPermission implements DeepstreamP
 
   public canPerformAction(socketWrapper: SocketWrapper, message: Message, callback: PermissionCallback, passItOn: any): void {
     // RPC caller's data
-    const userId = socketWrapper.userId;
-    const userRole = socketWrapper.serverData ? socketWrapper.serverData.role : '';
+    const { userId, serverData } = socketWrapper
+    const userRole = serverData ? serverData.role : ''
     /*
-    const userIP = socketWrapper.serverData.ip || '';
+    const userIP = serverData.ip || '';
     */
 
     // Exlude Servers from the rate limiting
