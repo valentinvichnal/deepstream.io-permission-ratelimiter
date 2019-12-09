@@ -8,8 +8,8 @@ exports.LIMIT = 300;
 // { 'rpc-name': points }
 exports.LIMITS = {
   'default': 1,
-  'vote': 20,
+  'vote': 45,
+  'post.create': 120,
   'comment.create': 120,
-  'subcomment.create': 120,
-  'post.create': 120
+  'subcomment.create': 120
 }
