@@ -20,8 +20,12 @@ To prevent spamming you can set higher costs for the `comment.create` RPC, and l
 
 ## Basic setup
 - Clone this into your deepstream server's /lib directory.
-- npm i inside ./lib/permission-ratelimiter
 - Customize ./lib/permission-ratelimiter/config/config.js
+- inside ./lib/permission-ratelimiter
+```sh
+$ npm i
+$ tsc
+```
 
 ## deepstream.io config file
 ```yaml
