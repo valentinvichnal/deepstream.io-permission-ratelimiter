@@ -55,6 +55,7 @@ export default class RateLimiter extends ConfigPermission implements DeepstreamP
     super.setRecordHandler(recordHandler);
   }
 
+  // TODO - Disable limit reached log messages
   public canPerformAction(socketWrapper: SocketWrapper, message: Message, callback: PermissionCallback, passItOn: any): void {
     // RPC caller's data
     const { userId, serverData } = socketWrapper;
